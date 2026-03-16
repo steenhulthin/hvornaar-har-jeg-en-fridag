@@ -10,7 +10,7 @@ Brugeren skal set et histogram over antal dage hvor der er hhv 5, 4, 3, 2 og 1 d
 Over histogrammet skal der være KPI'er med dage til næste fridag fra i dag, fridage i indeværende uge og tilbageværende fridage i året.
 
 ## Teknologi
-Statisk hjemmeside (html5) placeret i `site` mappen.
+Statisk hjemmeside (html5) placeret i `docs` mappen.
 
 # Layout
 Layout skal være elegant, men afdæmpet.
