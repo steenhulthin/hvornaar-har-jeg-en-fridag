@@ -420,19 +420,25 @@
   }
 
   function getEasterSunday(year) {
-    const century = Math.floor(year / 100);
     const goldenNumber = year % 19;
-    const skippedLeapYears = Math.floor((century - 17) / 25);
-    const correction = (century - Math.floor(century / 4) - skippedLeapYears + 19 * goldenNumber + 15) % 30;
-    const leapYearCorrection =
-      correction -
-      Math.floor(correction / 28) *
-        (1 - Math.floor(correction / 28) * Math.floor(29 / (correction + 1)) * Math.floor((21 - goldenNumber) / 11));
-    const weekdayCorrection =
-      (year + Math.floor(year / 4) + leapYearCorrection + 2 - century + Math.floor(century / 4)) % 7;
-    const offset = leapYearCorrection - weekdayCorrection;
-    const month = 3 + Math.floor((offset + 40) / 44);
-    const day = offset + 28 - 31 * Math.floor(month / 4);
+    const century = Math.floor(year / 100);
+    const yearInCentury = year % 100;
+    const leapCenturies = Math.floor(century / 4);
+    const centuryRemainder = century % 4;
+    const moonCorrection = Math.floor((century + 8) / 25);
+    const centuryAdjustment = Math.floor((century - moonCorrection + 1) / 3);
+    const epact =
+      (19 * goldenNumber + century - leapCenturies - centuryAdjustment + 15) % 30;
+    const leapYearsInCentury = Math.floor(yearInCentury / 4);
+    const yearRemainder = yearInCentury % 4;
+    const weekdayOffset =
+      (32 + 2 * centuryRemainder + 2 * leapYearsInCentury - epact - yearRemainder) %
+      7;
+    const correction = Math.floor(
+      (goldenNumber + 11 * epact + 22 * weekdayOffset) / 451
+    );
+    const month = Math.floor((epact + weekdayOffset - 7 * correction + 114) / 31);
+    const day = ((epact + weekdayOffset - 7 * correction + 114) % 31) + 1;
 
     return createUtcDate(year, month - 1, day);
   }

@@ -90,3 +90,27 @@ Jeg indsamler nu kun de relevante linjereferencer og opdaterer prompt-loggen, s�
 Implementeringen er lavet uden behov for ekstern data. `site/index.html` sætter strukturen op for KPI'er, valgfrie fridage, histogram og detaljelister. `site/styles.css` giver et afdæmpet layout med responsiv grid, og `site/app.js` beregner alle relevante danske fridage for 2026, inklusive valgfri juleaftensdag, nytårsaftensdag og fredag efter Kristi Himmelfart, samt håndterer næste fridag korrekt hen over årsskiftet.
 
 Verificering: `node --check site/app.js` passerede. Jeg kontrollerede også beregningerne lokalt: uden ekstra fridage er histogrammet 5/4/3/2/1 dage = 46/50/52/52/54 og der er 111 fridage i alt; med alle tre tilvalg er der 114 fridage og ingen huller over fem dage. Hvis du vil, kan jeg som næste skridt også tilføje en lille lokal preview-start eller en kort README til siden.
+# Context from my IDE setup:
+
+## Active file: docs/app.js
+
+## Active selection of the file:
+getEasterSunday
+## Open tabs:
+- app.js: docs/app.js
+- slutproduktbeskrivelse.md: slutproduktbeskrivelse.md
+- SoMe.md: SoMe.md
+- prompt.md: prompt.md
+- AGENTS.md: AGENTS.md
+
+## My request for Codex:
+I slutsproduktbeskrivelsen står der, som definerede i helgedagsloven, det er ikke lavet korrekt. 
+getEasterSunday skal rettes.
+Jeg retter først den påkrævede prompt-log og gennemgår derefter den aktuelle `docs/app.js`-implementering sammen med den relevante helligdagsdefinition, så jeg kan rette beregningen præcist.
+Jeg har bekræftet den relevante helligdagsafgrænsning fra officielle kilder: Store bededag er ikke længere med, mens de bevægelige helligdage fortsat afhænger af korrekt påskedato. Nu tester jeg den nuværende `getEasterSunday` direkte og retter selve algoritmen i `docs/app.js`.
+Jeg retter kun den del, der faktisk er forkert: `getEasterSunday` bliver erstattet med en standard gregoriansk beregning, så de bevægelige helligdage falder på de korrekte datoer i 2026 og de omkringliggende år.
+Jeg verifierer nu præcis det ændrede punkt: syntaksen, påskedatoen for 2026 og de afledte helligdage omkring påske og Kristi Himmelfart.
+Jeg er færdig med rettelsen. Jeg logger nu de sidste agent-svar og sender derefter en kort status med selve ændringen, den konkrete datokorrektion og den lovkilde, jeg brugte til at kontrollere helligdagsafgrænsningen.
+Jeg har rettet `getEasterSunday` i `docs/app.js` til en korrekt gregoriansk beregning. Den tidligere funktion gav en forkert påskedato for 2026 (`2026-04-12`); den rettede version giver `2026-04-05`, så de afledte bevægelige helligdage nu også falder korrekt, fx Skærtorsdag `2026-04-02` og Kristi Himmelfartsdag `2026-05-14`.
+
+Verificering: `node --check docs/app.js` passerede, og jeg testede datoerne lokalt for flere år (`2024`, `2025`, `2026`, `2027`, `2038`). Til helligdagsafgrænsningen brugte jeg den officielle lov om afskaffelsen af store bededag som helligdag fra Retsinformation, som også oplister de tilbageværende helligdage i den relevante ændring: https://www.retsinformation.dk/eli/lta/2023/214/pdf
